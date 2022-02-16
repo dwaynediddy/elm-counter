@@ -38,6 +38,8 @@ view model =
     div []
     [ h3 []
         [ text ("Total Calories: " ++ (String.fromInt model))]
+    div []
+        [ viewInput "text" "add specific amount"]
     , button
         [type_ "button"
         , onClick AddCalorie
@@ -49,3 +51,7 @@ view model =
         ]
         [ text "Clear"]
     ]
+
+viewInput : String -> String -> (String -> Msg) -> Html msg
+viewInput t p v toMsg =
+    input [type_ t, placeholder p, value, onInput to Msg] []
