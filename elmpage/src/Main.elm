@@ -34,7 +34,13 @@ init = {
   , suggestion = ""
   }
 
-type Msg = SetPage Page | First String | Last String | Email String | Phone String | Suggestion String
+type Msg = SetPage Page 
+  | SetFirstName String 
+  | Last String 
+  | Email String 
+  | Phone String 
+  | Suggestion String
+  | Submit
 
 type Page = Home | About | Contact | News
 --UPDATE
@@ -43,7 +49,7 @@ update : Msg -> Model -> Model
 update msg model = case msg of
   SetPage page ->
     { model | currentPage = page }
-  First first ->
+  SetFirstName first ->
     { model | firstName = first}
   Last last ->
     { model | lastName = last}
@@ -53,6 +59,15 @@ update msg model = case msg of
     { model | phone = phone}
   Suggestion suggestion ->
     { model | suggestion = suggestion}
+  Submit ->
+    { model
+      | firstName = ""
+      , lastName = ""
+      , email = ""
+      , phone = ""
+      , suggestion = ""
+    }
+
 
 
 
@@ -140,7 +155,7 @@ view model = case model.currentPage of
         ]
         [
         label [][text "First Name"]
-        , input [onInput First][]
+        , input [onInput SetFirstName][]
         , label [][text "Last Name"]
         , input [onInput Last][]
         , label [][text "Email"]
@@ -149,7 +164,7 @@ view model = case model.currentPage of
         , input [onInput Phone][]
         , label [][text "Suggestions"]
         , textarea [onInput Suggestion] []
-        , button [] [text "Submit"]
+        , button [onClick Submit] [text "Submit"]
         ]
         ]
         , myFooter
